@@ -1,9 +1,10 @@
 import random
-
 import mysql.connector.errors
 from flask import Flask, request
 from flask_restful import Api
 from mysql import connector
+
+
 # please install the requirements first
 
 def get_db_conn():
@@ -17,7 +18,7 @@ def get_db_conn():
     try:
         c = connector.connect(**mydb)
         return c
-    except:
+    except mysql.connector.errors.DatabaseError:
         print("connection error")
         exit(1)
 
@@ -52,7 +53,7 @@ def post_new_productor_show_all():
                 }
             except mysql.connector.errors.IntegrityError:
                 return "that ID already exist"
-            
+
         elif request.method == "GET":
             curs.execute('select * from products')
             result = curs.fetchall()

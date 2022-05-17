@@ -1,4 +1,6 @@
 import random
+
+import mysql.connector.errors
 from flask import Flask, request
 from flask_restful import Api
 from mysql import connector
@@ -36,17 +38,21 @@ def post_new_productor_show_all():
             name = json['name']
             price = json['price']
             quantity = json['quantity']
-            curs.execute(
-                f'INSERT INTO products (id,name,price,quantity) values ("{sid}","{name}","{price}","{quantity}")')
-            conn.commit()
-            curs.execute(f'select * from products where id="{sid}"')
-            result = curs.fetchone()
-            num_generator = random.randint(1, 50000)
-            return {
-                "code": num_generator,
-                "status": "Done",
-                "data": result
-            }
+            try:
+                curs.execute(
+                    f'INSERT INTO products (id,name,price,quantity) values ("{sid}","{name}","{price}","{quantity}")')
+                conn.commit()
+                curs.execute(f'select * from products where id="{sid}"')
+                result = curs.fetchone()
+                num_generator = random.randint(1, 50000)
+                return {
+                    "code": num_generator,
+                    "status": "Done",
+                    "data": result
+                }
+            except mysql.connector.errors.IntegrityError:
+                return "that ID already exist"
+            
         elif request.method == "GET":
             curs.execute('select * from products')
             result = curs.fetchall()

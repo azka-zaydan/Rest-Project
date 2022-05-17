@@ -1,9 +1,8 @@
 import random
-
 from flask import Flask, request
 from flask_restful import Api
 from mysql import connector
-
+# please install the requirements first
 
 def get_db_conn():
     mydb = {

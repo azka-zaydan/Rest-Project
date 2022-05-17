@@ -80,14 +80,14 @@ def update_get_delete_product_by_id(sid):
             "status": "Done",
             "data": result}
     elif request.method == "DELETE":
-        curs.execute(f'DELETE FROM products WHERE id="{id}"')
+        curs.execute(f'DELETE FROM products WHERE id="{sid}"')
         conn.commit()
         return {
             "code": num_generator,
             "staus": "Done"
         }
     elif request.method == "GET":
-        curs.execute(f'select * from products where id="{id}"')
+        curs.execute(f'select * from products where id="{sid}"')
         result = curs.fetchone()
         return {
             "code": num_generator,

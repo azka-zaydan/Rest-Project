@@ -1,5 +1,5 @@
 # Rest Project
 Back-End Developer Test for ebDesk.\
 The Database is from a docker container running MySQL\
-The .sql file is named dump
+Please use the dump.sql to have the exact same database.
 

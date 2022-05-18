@@ -47,25 +47,25 @@ def post_new_productor_show_all():
                 result = curs.fetchone()
                 num_generator = random.randint(1, 50000)
                 return {
-                    "code": num_generator,
-                    "status": "Done",
+                    "code": 201,
+                    "status": "Ok",
                     "data": result
                 }
             except mysql.connector.errors.IntegrityError:
-                return "that ID already exist"
+                return {"that ID already exist":409}
 
         elif request.method == "GET":
             curs.execute('select * from products')
             result = curs.fetchall()
             num_generator = random.randint(1, 50000)
             return {
-                "code": num_generator,
-                "status": "Done",
+                "code": 201,
+                "status": "Ok",
                 "data": result
             }
 
     else:
-        return {"error": 'cannot process'}
+        return {"error cannot proccess": 400}
 
 
 @app.route('/api/products/<string:sid>', methods=['PUT', 'DELETE', "GET"])
@@ -83,22 +83,22 @@ def update_get_delete_product_by_id(sid):
         curs.execute(f'select * from products where id="{newid}"')
         result = curs.fetchone()
         return {
-            "code": num_generator,
-            "status": "Done",
+            "code": 202,
+            "status": "Ok",
             "data": result}
     elif request.method == "DELETE":
         curs.execute(f'DELETE FROM products WHERE id="{sid}"')
         conn.commit()
         return {
-            "code": num_generator,
-            "staus": "Done"
+            "code": 202,
+            "staus": "Ok"
         }
     elif request.method == "GET":
         curs.execute(f'select * from products where id="{sid}"')
         result = curs.fetchone()
         return {
-            "code": num_generator,
-            "status": "Done",
+            "code": 201,
+            "status": "Ok",
             "data": result}
 
 

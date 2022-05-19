@@ -96,7 +96,6 @@ def update_get_delete_product_by_id(sid):
     elif request.method == "GET":
         curs.execute(f'select * from products where id="{sid}"')
         result = curs.fetchone()
-        print(result)
         if result is not None:
 
             return {

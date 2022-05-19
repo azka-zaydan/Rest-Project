@@ -96,11 +96,17 @@ def update_get_delete_product_by_id(sid):
     elif request.method == "GET":
         curs.execute(f'select * from products where id="{sid}"')
         result = curs.fetchone()
-        return {
-            "code": 201,
-            "status": "Ok",
-            "data": result}
+        print(result)
+        if result is not None:
 
+            return {
+                "code": 201,
+                "status": "Ok",
+                "data": result}
+        else:
+            return {
+                "ID Does not exist":401
+            }
 
 if __name__ == "__main__":
     app.run(debug=True)
